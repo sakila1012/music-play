@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="Generator" content="EditPlus®">
+		<meta name="Author" content="">
+		<meta name="Keywords" content="">
+		<meta name="Description" content="">
+		<title>Document</title>
+		<style>
+			*{margin:0;padding:0;}
+			body{font-size:28px;font-family:"微软雅黑";}
+			a{text-decoration:none;}
+			#music{
+				height:50px;
+				width:400px;
+				border:1px solid #ccc;
+				line-height:50px;
+				padding-left:30px;
+				margin:100px auto;}
+			
+			.prograss{height:30px;width:640px;background:#e1e1e1;border:1px solid #f7f7f7;position:relative;}
+			#percent{position:absolute;top:0;left:0;height:100%;width:50%;background:green;}
+		</style>
+	</head>
+	<body>
+		<div id="music">
+			<a href="javascript:;" onclick="playstop(this);">播放</a>
+			<a href="javascript:;" onclick="tzAudio.next();">下一首</a>
+			<a href="javascript:;" onclick="tzAudio.prev();">上一首</a>
+			<div class="prograss">
+				<div id="percent"></div>
+			</div>
+			<span id="time">00:00</span>
+			<span id="stime">00:00</span>
+			<span id="ctime">00:00</span>
+		</div>
+		<script type="text/javascript" src="audio.js"></script>
+		<script>
+			//对象，事件，回调函数
+			/*
+				组件封装的步骤 ==音乐播放器的组件
+				1、创建一个音乐播放器
+				2、播放音乐
+				3、暂停音乐
+				4、显示时间
+				5、音量的控制
+				6、进度的展示
+				7、上一首下一首
+				8、添加音乐
+				9、静音
+				10、歌词
+			*/
+
+			//音乐播放器初始化
+			window.onload = function(){
+				//音乐初始化
+				audio.init();
+				//添加音乐
+				audio.add("mp3/01.mp3");
+				audio.add("mp3/02.mp3");
+				audio.add("mp3/03.mp3");
+				audio.add("mp3/04.mp3");
+				//音乐时间展示
+				audio.time(function(time){
+					document.getElementById("time").innerHTML = this.time;
+					
+				});
+				//音乐进度条
+				audio.percent(function(){
+					document.getElementById("percent").style.width = this.per+"%";
+					document.getElementById("stime").innerHTML = this.time;
+					document.getElementById("ctime").innerHTML = this.curtime;
+					//音乐歌词
+				});
+			};
+			function playstop(obj){
+				var text = obj.innerHTML;
+				if(text=="播放"){
+					audio.play();
+					obj.innerHTML = "暂停";
+				}else{
+					audio.stop();
+					obj.innerHTML = "播放";
+				}
+				
+			};
+		</script>
+	</body>
+</html>
